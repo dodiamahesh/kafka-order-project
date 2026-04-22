@@ -1,0 +1,110 @@
+<div class="form-card">
+
+  <!-- Header -->
+  <div class="form-header">
+    <div class="form-title">
+      <span class="icon">📦</span>
+      <div>
+        <h2>Place New Order</h2>
+        <p class="subtitle">Published to Kafka → processed async</p>
+      </div>
+    </div>
+    <button type="button" class="btn-demo" (click)="fillDemo()">
+      ⚡ Fill Demo
+    </button>
+  </div>
+
+  <!-- Kafka Flow Visual -->
+  <div class="kafka-flow">
+    <span class="flow-step active">Angular</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">REST API</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Kafka Topic</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Consumer</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">H2 DB</span>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+
+    <!-- Customer Name -->
+    <div class="field">
+      <label>Customer Name</label>
+      <input
+        formControlName="customerName"
+        type="text"
+        placeholder="e.g. Ravi Sharma"
+        [class.invalid]="f['customerName'].invalid && f['customerName'].touched"
+      />
+      <span class="field-error" *ngIf="f['customerName'].invalid && f['customerName'].touched">
+        Name is required (min 2 chars)
+      </span>
+    </div>
+
+    <!-- Product -->
+    <div class="field">
+      <label>Product</label>
+      <select
+        formControlName="product"
+        (change)="onProductChange($event)"
+        [class.invalid]="f['product'].invalid && f['product'].touched"
+      >
+        <option value="">— Select a product —</option>
+        <option *ngFor="let p of sampleProducts" [value]="p.name">
+          {{ p.name }} — ₹{{ p.price | number:'1.2-2' }}
+        </option>
+      </select>
+      <span class="field-error" *ngIf="f['product'].invalid && f['product'].touched">
+        Please select a product
+      </span>
+    </div>
+
+    <!-- Quantity + Price row -->
+    <div class="field-row">
+      <div class="field">
+        <label>Quantity</label>
+        <input
+          formControlName="quantity"
+          type="number"
+          min="1" max="1000"
+          [class.invalid]="f['quantity'].invalid && f['quantity'].touched"
+        />
+      </div>
+      <div class="field">
+        <label>Price (₹)</label>
+        <input
+          formControlName="price"
+          type="number"
+          step="0.01"
+          placeholder="0.00"
+          [class.invalid]="f['price'].invalid && f['price'].touched"
+        />
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-banner" *ngIf="errorMessage()">
+      ⚠️ {{ errorMessage() }}
+    </div>
+
+    <!-- Success -->
+    <div class="success-banner" *ngIf="submitSuccess()">
+      ✅ Order placed! Kafka is processing it... watch the table below ↓
+    </div>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      class="btn-submit"
+      [disabled]="form.invalid || isSubmitting()"
+    >
+      <span *ngIf="!isSubmitting()">🚀 Place Order → Kafka</span>
+      <span *ngIf="isSubmitting()" class="pulse">⚙️ Publishing to Kafka...</span>
+    </button>
+
+  </form>
+
+</div>

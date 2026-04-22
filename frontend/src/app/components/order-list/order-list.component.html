@@ -1,0 +1,128 @@
+<div class="list-card">
+
+  <!-- Header + Filter -->
+  <div class="list-header">
+    <div class="list-title">
+      <span class="icon">📋</span>
+      <div>
+        <h2>Live Order Stream</h2>
+        <p class="subtitle">Auto-updates via SSE when Kafka consumer processes orders</p>
+      </div>
+    </div>
+
+    <div class="sse-badge">
+      <span class="sse-dot pulse"></span>
+      LIVE SSE
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button
+      *ngFor="let tab of ['ALL','PENDING','PROCESSING','COMPLETED','FAILED']"
+      class="tab"
+      [class.active]="filter() === tab"
+      (click)="setFilter(tab)"
+    >
+      {{ tab }}
+      <span class="tab-count">{{ getTabCount(tab) }}</span>
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredOrders.length === 0">
+    <div class="empty-icon">📭</div>
+    <p>No orders yet. Place one above to see Kafka in action!</p>
+    <p class="empty-hint">Each order goes through: PENDING → PROCESSING → COMPLETED/FAILED</p>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="table-wrapper" *ngIf="filteredOrders.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>#ID</th>
+          <th>Customer</th>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Message</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let order of filteredOrders; trackBy: trackById"
+          [class.highlighted]="highlightedId() === order.id"
+          [class.row-processing]="order.status === 'PROCESSING'"
+        >
+          <!-- ID -->
+          <td class="cell-id">
+            <span class="mono">#{{ order.id }}</span>
+          </td>
+
+          <!-- Customer -->
+          <td class="cell-customer">{{ order.customerName }}</td>
+
+          <!-- Product -->
+          <td class="cell-product">
+            <span class="product-name">{{ order.product }}</span>
+          </td>
+
+          <!-- Quantity -->
+          <td class="cell-qty mono">{{ order.quantity }}</td>
+
+          <!-- Total -->
+          <td class="cell-total mono">
+            ₹{{ totalAmount(order) | number:'1.2-2' }}
+          </td>
+
+          <!-- Status Badge -->
+          <td class="cell-status">
+            <span class="badge" [ngClass]="getStatusClass(order.status)">
+              <span [class.pulse]="isProcessing(order.status)">
+                {{ getStatusIcon(order.status) }}
+              </span>
+              {{ order.status }}
+            </span>
+          </td>
+
+          <!-- Status Message -->
+          <td class="cell-message">
+            <span class="msg-text">{{ order.statusMessage }}</span>
+          </td>
+
+          <!-- Created At -->
+          <td class="cell-time mono">
+            {{ order.createdAt | date:'HH:mm:ss' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Kafka Concept Box -->
+  <div class="concept-box" *ngIf="orders().length > 0">
+    <div class="concept-title">💡 What's happening under the hood</div>
+    <div class="concept-steps">
+      <div class="concept-step">
+        <span class="cs-num">1</span>
+        <span>Angular POSTs order → Spring Boot saves it as <code>PENDING</code></span>
+      </div>
+      <div class="concept-step">
+        <span class="cs-num">2</span>
+        <span>Spring Boot publishes <code>OrderEvent</code> to Kafka topic <code>order-placed</code></span>
+      </div>
+      <div class="concept-step">
+        <span class="cs-num">3</span>
+        <span><code>&#64;KafkaListener</code> consumer picks up the message from its partition</span>
+      </div>
+      <div class="concept-step">
+        <span class="cs-num">4</span>
+        <span>Consumer updates H2 DB status → fires Spring event → SSE pushes to Angular</span>
+      </div>
+    </div>
+  </div>
+
+</div>

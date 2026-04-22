@@ -1,0 +1,200 @@
+.form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.form-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.form-title .icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.form-title h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.form-title .subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  margin: 2px 0 0;
+}
+
+.btn-demo {
+  background: rgba(56,189,248,0.08);
+  border: 1px solid rgba(56,189,248,0.25);
+  color: var(--accent-blue);
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.btn-demo:hover {
+  background: rgba(56,189,248,0.15);
+  border-color: var(--accent-blue);
+}
+
+/* Kafka flow diagram */
+.kafka-flow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 22px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+
+.flow-step {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.flow-step.active {
+  color: var(--accent-blue);
+  background: rgba(56,189,248,0.1);
+}
+
+.flow-arrow {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* Fields */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: var(--font-body);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+}
+
+.field input.invalid,
+.field select.invalid {
+  border-color: var(--accent-red);
+}
+
+.field select option {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-error {
+  display: block;
+  font-size: 11px;
+  color: var(--accent-red);
+  margin-top: 4px;
+  font-family: var(--font-mono);
+}
+
+/* Banners */
+.error-banner {
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.25);
+  color: var(--accent-red);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.success-banner {
+  background: rgba(52,211,153,0.08);
+  border: 1px solid rgba(52,211,153,0.25);
+  color: var(--accent-green);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 14px;
+  animation: slideIn 0.3s ease;
+}
+
+/* Submit Button */
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  border: none;
+  color: #fff;
+  padding: 13px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.4);
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}

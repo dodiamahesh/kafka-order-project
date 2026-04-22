@@ -1,0 +1,100 @@
+/* ════════════════════════════════════════════════════════
+   Global Styles — Kafka Order System
+   Theme: Dark terminal / industrial with neon accents
+   ════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-base:        #0a0e17;
+  --bg-surface:     #111827;
+  --bg-card:        #161e2e;
+  --bg-hover:       #1e2d45;
+
+  --border:         #1f2d42;
+  --border-bright:  #2a3f5f;
+
+  --text-primary:   #e2e8f0;
+  --text-secondary: #8899aa;
+  --text-muted:     #4a5568;
+
+  --accent-blue:    #38bdf8;
+  --accent-green:   #34d399;
+  --accent-yellow:  #fbbf24;
+  --accent-red:     #f87171;
+  --accent-purple:  #a78bfa;
+
+  --status-pending:    #fbbf24;
+  --status-processing: #38bdf8;
+  --status-completed:  #34d399;
+  --status-failed:     #f87171;
+
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-glow-blue:  0 0 20px rgba(56,189,248,0.15);
+  --shadow-glow-green: 0 0 20px rgba(52,211,153,0.15);
+}
+
+html, body {
+  min-height: 100vh;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+/* Utility */
+.mono { font-family: var(--font-mono); }
+.text-muted { color: var(--text-secondary); }
+
+/* Status badge base */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.badge-pending    { background: rgba(251,191,36,0.12);  color: var(--status-pending);    border: 1px solid rgba(251,191,36,0.3); }
+.badge-processing { background: rgba(56,189,248,0.12);  color: var(--status-processing); border: 1px solid rgba(56,189,248,0.3); }
+.badge-completed  { background: rgba(52,211,153,0.12);  color: var(--status-completed);  border: 1px solid rgba(52,211,153,0.3); }
+.badge-failed     { background: rgba(248,113,113,0.12); color: var(--status-failed);     border: 1px solid rgba(248,113,113,0.3); }
+
+/* Pulse animation for processing */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse { animation: pulse 1.5s ease-in-out infinite; }
+
+/* Slide-in animation */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide-in { animation: slideIn 0.3s ease forwards; }
+
+/* Fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fade-in { animation: fadeIn 0.4s ease forwards; }
